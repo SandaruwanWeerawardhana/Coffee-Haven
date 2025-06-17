@@ -14,23 +14,27 @@
 
       <section class="bg-white p-6 rounded-lg shadow-md">
         <h2 class="text-xl font-semibold mb-4">Add New Coffee Item</h2>
-        <form class="space-y-4">
+           @if(session('success'))
+             <p style="color:green;">{{ session('success') }}</p>
+           @endif
+        <form class="space-y-4"  method="POST" action="{{ route('items.store') }}">
+          @csrf
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Item Name</label>
-              <input type="text" placeholder="e.g. Latte" required
+              <input type="text" name="name" placeholder="e.g. Latte" required
                 class="w-full px-4 py-2 border rounded focus:ring focus:ring-yellow-300 focus:outline-none">
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Price ($)</label>
-              <input type="number" step="0.01" min="0" required
+              <label class="block text-sm font-medium text-gray-700 mb-1">Price (Rs)</label>
+              <input type="number" name="price" step="0.01" min="0" required
                 class="w-full px-4 py-2 border rounded focus:ring focus:ring-yellow-300 focus:outline-none">
             </div>
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Image</label>
-            <input type="file" step="0.01" min="0" required
-                class="w-full px-4 py-2 border rounded focus:ring focus:ring-yellow-300 focus:outline-none">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+            <input type="text" name="description" placeholder="Description" required
+              class="w-full px-4 py-2 border rounded focus:ring focus:ring-yellow-300 focus:outline-none">
           </div>
           <button type="submit"
             class="bg-black text-white px-5 py-2 rounded hover:bg-yellow-500 transition duration-300">
@@ -48,38 +52,22 @@
               <tr>
                 <th class="py-3 px-4">Name</th>
                 <th class="py-3 px-4">Price</th>
-                <th class="py-3 px-4">Image</th>
+                <th class="py-3 px-4">Description</th>
                 <th class="py-3 px-4">Actions</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
+              @foreach($items as $item)
               <tr>
-                <td class="py-3 px-4 font-medium">Espresso</td>
-                <td class="py-3 px-4">$2.50</td>
-                <td class="py-3 px-4">A strong and bold shot of pure coffee essence.</td>
+                <td class="py-3 px-4 font-medium">{{ $item->name }}</td>
+                <td class="py-3 px-4">{{ $item->price }}</td>
+                <td class="py-3 px-4">{{ $item->description }}</td>
                 <td class="py-3 px-4 space-x-2">
                   <button class="text-blue-600 hover:text-blue-800">Edit</button>
                   <button class="text-red-600 hover:text-red-800">Delete</button>
                 </td>
               </tr>
-              <tr>
-                <td class="py-3 px-4 font-medium">Cappuccino</td>
-                <td class="py-3 px-4">$3.50</td>
-                <td class="py-3 px-4">Smooth blend of espresso, steamed milk, and foam.</td>
-                <td class="py-3 px-4 space-x-2">
-                  <button class="text-blue-600 hover:text-blue-800">Edit</button>
-                  <button class="text-red-600 hover:text-red-800">Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <td class="py-3 px-4 font-medium">Latte</td>
-                <td class="py-3 px-4">$4.00</td>
-                <td class="py-3 px-4">Creamy and rich with a touch of artful foam.</td>
-                <td class="py-3 px-4 space-x-2">
-                  <button class="text-blue-600 hover:text-blue-800">Edit</button>
-                  <button class="text-red-600 hover:text-red-800">Delete</button>
-                </td>
-              </tr>
+              @endforeach
             </tbody>
           </table>
         </div>
