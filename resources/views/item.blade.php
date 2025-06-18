@@ -63,7 +63,7 @@
                 <td class="py-3 px-4">{{ $item->price }}</td>
                 <td class="py-3 px-4">{{ $item->description }}</td>
                 <td class="py-3 px-4 space-x-2">
-                  <button class="text-blue-600 hover:text-blue-800">Edit</button>
+                  <button class="text-blue-600 hover:text-blue-800" onclick="open">Edit</button>
                   <button class="text-red-600 hover:text-red-800">Delete</button>
                 </td>
               </tr>
@@ -72,8 +72,33 @@
           </table>
         </div>
       </section>
-
     </main>
+
+  <div id="editModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" style="display: none;">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+      <h3 class="text-lg font-semibold mb-4">Edit Item</h3>
+        <form id="editForm" method="POST" action="/items/update">
+          @csrf
+          <input type="hidden" name="id" id="editId">
+          <div class="mb-4">
+            <label class="block text-gray-700">Name</label>
+            <input type="text" name="name" id="editName" class="w-full border border-gray-300 p-2 rounded">
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700">Price</label>
+            <input type="text" name="price" id="editPrice" class="w-full border border-gray-300 p-2 rounded">
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700">Description</label>
+            <textarea name="description" id="editDescription" class="w-full border border-gray-300 p-2 rounded"></textarea>
+          </div>
+          <div class="flex justify-end space-x-2">
+            <button type="button" onclick="closeEditModal()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Update</button>
+          </div>
+        </form>
+    </div>
+  </div>
 
     <!-- Footer -->
     <footer class="bg-white shadow-inner py-4 text-center text-sm text-gray-600">
